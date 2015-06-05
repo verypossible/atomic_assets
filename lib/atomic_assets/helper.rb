@@ -1,6 +1,6 @@
 module AtomicAssets
   module Helper
-    def atom(name, options = {}, &block)
+    def component(name, options = {}, &block)
       if block_given?
         if block.arity == 0
           options[:content] = capture(&block)
@@ -8,7 +8,7 @@ module AtomicAssets
           block.call(options)
         end
       end
-      render partial: "atoms/#{name}", locals: { options: options }
+      render partial: "components/#{name}", locals: { options: options }
     end
   end
 end
