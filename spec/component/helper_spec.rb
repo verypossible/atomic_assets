@@ -14,6 +14,18 @@ describe AtomicAssets::Helper do
     end
   end
 
+  describe '#build_component_class' do
+    it 'sets new constant' do
+      expect { FakeComponent }.to raise_error(NameError)
+      subject.send(:build_component_class, 'FakeComponent')
+      expect(FakeComponent.new).to be_an(AtomicAssets::Component)
+    end
+
+    it 'returns new component' do
+      expect(subject.send(:build_component_class, 'SomeComponent').new).to be_an(AtomicAssets::Component)
+    end
+  end
+
   describe '#component_class' do
     describe 'with existing component' do
       it 'returns class constant' do
@@ -22,8 +34,11 @@ describe AtomicAssets::Helper do
     end
 
     describe 'with missing component' do
-      it 'raises error' do
-        expect { subject.send(:component_class, :fake) }.to raise_error(NameError)
+      before { allow(subject).to receive(:build_component_class).and_return(:new_class)}
+
+      it 'returns new component' do
+        expect(subject).to receive(:build_component_class).once.with('AnotherComponent')
+        expect(subject.send(:component_class, :another)).to eq(:new_class)
       end
     end
   end

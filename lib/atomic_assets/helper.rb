@@ -6,8 +6,16 @@ module AtomicAssets
 
     private
 
+    def build_component_class(name)
+      klass = Class.new(AtomicAssets::Component)
+      Object.const_set(name, klass)
+    end
+
     def component_class(name)
-      "#{name}_component".classify.constantize
+      klass = "#{name}_component".classify
+      klass.constantize
+    rescue NameError
+      build_component_class(klass)
     end
   end
 end
