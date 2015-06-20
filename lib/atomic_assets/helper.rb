@@ -1,14 +1,13 @@
 module AtomicAssets
   module Helper
     def component(name, options = {}, &block)
-      if block_given?
-        if block.arity == 0
-          options[:content] = capture(&block)
-        else
-          block.call(options)
-        end
-      end
-      render partial: "components/#{name}", locals: { options: options }
+      component_class(name).new(options, &block)
+    end
+
+    private
+
+    def component_class(name)
+      "#{name}_component".classify.constantize
     end
   end
 end
