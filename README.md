@@ -19,9 +19,8 @@ Just add `gem 'atomic_assets'` to your Gemfile and run `bundle install`!
 
 Dump your component templates into the `app/views/components/` directory of your site. They can be any template language that Rails understands!
 
-Example: "app/views/components/banner.html.slim"
-
 ```slim
+/ app/views/components/banner.html.slim
 .banner
   h2
     = options[:title]
@@ -33,9 +32,8 @@ Example: "app/views/components/banner.html.slim"
 
 Use the `component(name, options = {})` helper to output component templates in any view.
 
-Example: "app/views/home/index.html.slim"
-
 ```slim
+/ app/views/home/index.html.slim
 = component(:banner, title: 'Hello World')
   p Block content will be passed into :content
   p This makes component wrappers a piece of cake!
@@ -46,6 +44,7 @@ Example: "app/views/home/index.html.slim"
 Components can be used in any view context. You can use them in layouts...
 
 ```slim
+/ app/views/layouts/application.html.slim
 html
   head
     title My Site
@@ -58,6 +57,7 @@ html
 ...inside of other components...
 
 ```slim
+/ app/views/components/catalog.html.slim
 .catalog
   h2 Catalog
   .items
@@ -68,6 +68,7 @@ html
 ...or even render them from your controller.
 
 ```ruby
+# app/controllers/catalog_controller.rb
 class CatalogController
   def index
     items = CatalogItem.all
@@ -76,6 +77,31 @@ class CatalogController
 end
 ```
 
+## Custom component classes
+
+You can also define your own component classes with custom render logic.
+
+```ruby
+# app/components/back_button_component.rb
+class BackButtonComponent < AtomicAssets::Component
+  def render
+    h.link_to(button_text, back_url, class: 'button')
+  end
+
+  private
+
+  def back_url
+    h.url_for(:back)
+  end
+
+  def button_text
+    options[:text] || 'Back'
+  end
+end
+```
+
+Then render like usual with `component(:back_button)`.
+
 ## But wait, there's more!
 
-These are the building blocks for a robust atomic assets engine. Future features will include: customizable component classes, isolated view helpers, CSS and JavaScript integration, generators, serialization, component-powered content management, and a living style guide to preview your components.
+These are the building blocks for a robust atomic assets engine. Future features will include: component view helpers, CSS and JavaScript integration, generators, serialization, component-powered content management, and a living style guide to preview your components.
