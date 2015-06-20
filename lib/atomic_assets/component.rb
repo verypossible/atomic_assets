@@ -5,6 +5,7 @@ module AtomicAssets
     include Deserialize
     include Helper
     include Initialize
+    include Render
     include Serialize
   end
 end

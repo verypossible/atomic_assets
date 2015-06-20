@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe AtomicAssets::Component do
-  it 'is a decorator' do
+  it 'extends Draper::Decorator' do
     expect(subject).to be_a(Draper::Decorator)
   end
 
@@ -15,6 +15,10 @@ describe AtomicAssets::Component do
 
   it 'includes Initialize' do
     expect(subject).to be_an(AtomicAssets::Initialize)
+  end
+
+  it 'includes Render' do
+    expect(subject).to be_an(AtomicAssets::Render)
   end
 
   it 'includes Serialize' do
