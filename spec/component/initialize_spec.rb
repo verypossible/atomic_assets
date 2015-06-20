@@ -48,11 +48,13 @@ describe AtomicAssets::Initialize do
 
   describe '#capture_block' do
     subject { TestComponent.new }
-    before { allow(subject).to receive(:capture).and_return('test') }
+    before { allow(subject).to receive(:h).and_return(helpers) }
+    let(:helpers) { double(capture: 'test') }
     let(:options) { { a: 1, b: 2} }
 
     it 'calls capture' do
-      expect(subject).to receive(:capture)
+      expect(subject).to receive(:h).once
+      expect(helpers).to receive(:capture).once
       subject.send(:capture_block, options) { 'test' }
     end
 

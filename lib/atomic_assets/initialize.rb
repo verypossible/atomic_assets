@@ -9,7 +9,7 @@ module AtomicAssets
     private
 
     def capture_block(options, &block)
-      options.merge!(content: capture(&block))
+      options.merge!(content: h.capture(&block))
     end
   end
 end
