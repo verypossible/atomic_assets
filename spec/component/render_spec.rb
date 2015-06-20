@@ -16,7 +16,7 @@ describe AtomicAssets::Render do
 
     it 'renders partial' do
       expect(subject).to receive(:h).once
-      expect(h).to receive(:render).with(partial: 'x/y', locals: { options: subject.object }).once
+      expect(h).to receive(:render).with(partial: 'x/y', locals: { options: { a: 1, b: 'string' } }).once
       expect(subject.render).to eq(:render_test)
     end
   end

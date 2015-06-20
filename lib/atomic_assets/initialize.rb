@@ -3,7 +3,7 @@ module AtomicAssets
     def initialize(options = {}, &block)
       raise ArgumentError unless options.is_a? Hash
       capture_block(options, &block) if block_given?
-      super(options)
+      @options = options
     end
 
     private

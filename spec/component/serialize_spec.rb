@@ -10,7 +10,7 @@ describe AtomicAssets::Serialize do
     end
 
     it 'returns correct yaml' do
-      yaml = "--- !ruby/object:TestComponent\nobject:\n  :a: 1\n  :b: string\ncontext: {}\n"
+      yaml = "--- !ruby/object:TestComponent\noptions:\n  :a: 1\n  :b: string\n"
       expect(subject.to_yaml).to eq(yaml)
     end
   end

@@ -5,7 +5,7 @@ describe AtomicAssets::Initialize do
 
   describe '.new' do
     let(:options) { { a: 1, b: 2} }
-    before { allow_any_instance_of(TestComponent).to receive(:capture_block) }
+    before { allow_any_instance_of(TestComponent).to receive(:capture_block).and_return('test') }
 
     describe 'with hash' do
       it 'does not raise error' do
@@ -28,8 +28,8 @@ describe AtomicAssets::Initialize do
     describe 'without block' do
       let(:instance) { TestComponent.new(options) }
 
-      it 'decorates options' do
-        expect(instance.object).to be(options)
+      it 'assigns options' do
+        expect(instance.options).to be(options)
       end
 
       # it 'does not capture block' do

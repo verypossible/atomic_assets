@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe AtomicAssets::Component do
-  it 'extends Draper::Decorator' do
-    expect(subject).to be_a(Draper::Decorator)
+  it 'extends Draper::ViewHelpers' do
+    expect(subject).to be_a(Draper::ViewHelpers)
   end
 
   it 'includes Deserialize' do

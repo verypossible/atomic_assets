@@ -4,7 +4,7 @@ describe AtomicAssets::Deserialize do
   subject { AtomicAssets::Component }
 
   let(:component) { TestComponent.new(a: 1, b: 'string') }
-  let(:yaml) { "--- !ruby/object:TestComponent\nobject:\n  :a: 1\n  :b: string\ncontext: {}\n" }
+  let(:yaml) { "--- !ruby/object:TestComponent\noptions:\n  :a: 1\n  :b: string\n" }
 
   describe '.from_yaml' do
     it 'calls preload_components' do
@@ -18,7 +18,9 @@ describe AtomicAssets::Deserialize do
     end
 
     it 'deserializes object' do
-      expect(subject.from_yaml(yaml)).to eq(component)
+      obj = subject.from_yaml(yaml)
+      expect(obj).to be_a(TestComponent)
+      expect(obj.options).to eq(component.options)
     end
   end
 
