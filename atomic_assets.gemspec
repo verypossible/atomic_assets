@@ -6,7 +6,15 @@ Gem::Specification.new do |s|
   s.description = 'Organize, style, and consume atomically designed assets in Ruby on Rails.'
   s.authors     = ['Don Humphreys']
   s.email       = 'dhumphreys88@gmail.com'
-  s.files       = ['lib/atomic_assets.rb', 'lib/atomic_assets/helper.rb']
+  s.files       = `git ls-files lib`
+  # s.files       = ['lib/atomic_assets.rb', 'lib/atomic_assets/helper.rb']
   # s.homepage    = 'http://rubygems.org/gems/atomic_assets'
   # s.license       = 'MIT'
+
+  s.add_dependency 'draper', '~> 2.1'
+
+  s.add_development_dependency 'rspec-core', '~> 3.3'
+  s.add_development_dependency 'rspec-expectations', '~> 3.3'
+  s.add_development_dependency 'rspec-mocks', '~> 3.3'
+  s.add_development_dependency 'rspec-support', '~> 3.3'
 end
