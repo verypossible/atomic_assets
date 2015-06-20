@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'atomic_assets'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.date        = '2015-06-20'
   s.summary     = 'Atomic Assets'
   s.description = 'Organize, style, and consume atomically designed assets in Ruby on Rails.'
