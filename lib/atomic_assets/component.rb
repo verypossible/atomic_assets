@@ -2,11 +2,9 @@ require 'draper'
 
 module AtomicAssets
   class Component < Draper::Decorator
-    include Serialize
-    include Deserialize
+    include Initialize
 
-    def initialize(options = {})
-      super(options)
-    end
+    include Deserialize
+    include Serialize
   end
 end
