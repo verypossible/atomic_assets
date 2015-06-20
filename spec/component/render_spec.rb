@@ -14,9 +14,9 @@ describe AtomicAssets::Render do
     before { allow(subject).to receive(:h).and_return(h) }
     before { allow(subject).to receive(:template_path).and_return('x/y') }
 
-    it 'renders template' do
+    it 'renders partial' do
       expect(subject).to receive(:h).once
-      expect(h).to receive(:render).with(template: 'x/y', locals: subject.object).once
+      expect(h).to receive(:render).with(partial: 'x/y', locals: { options: subject.object }).once
       expect(subject.render).to eq(:render_test)
     end
   end

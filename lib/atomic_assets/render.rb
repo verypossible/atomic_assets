@@ -3,7 +3,7 @@ module AtomicAssets
     COMPONENT_PATH = 'components'
 
     def render
-      h.render(template: template_path, locals: object)
+      h.render(partial: template_path, locals: { options: object })
     end
 
     def to_s
