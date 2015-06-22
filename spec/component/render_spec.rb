@@ -9,15 +9,54 @@ describe AtomicAssets::Render do
     end
   end
 
-  describe '#render' do
-    let(:h) { double(render: :render_test) }
-    before { allow(subject).to receive(:h).and_return(h) }
-    before { allow(subject).to receive(:template_path).and_return('x/y') }
+  describe 'PARTIALS_DEPRECATED' do
+    it 'has default value' do
+      expect(AtomicAssets::Render::PARTIALS_DEPRECATED).to be_a(String)
+    end
+  end
 
-    it 'renders partial' do
-      expect(subject).to receive(:h).once
-      expect(h).to receive(:render).with(partial: 'x/y', locals: { options: { a: 1, b: 'string' } }).once
-      expect(subject.render).to eq(:render_test)
+  describe '#render' do
+    before { allow(subject).to receive(:template_path).and_return('components/test') }
+    before { allow(subject).to receive(:render_partial).and_return(:render_part) }
+    before { allow(subject).to receive(:render_template).and_return(:render_temp) }
+
+    describe 'existing template' do
+
+      it 'renders template' do
+        expect(subject).to receive(:render_template).once
+        expect(subject).not_to receive(:render_partial)
+        expect(subject.render).to eq(:render_temp)
+      end
+    end
+
+    describe 'missing template' do
+      let(:error) { ActionView::MissingTemplate.new([], 'components/test', [], false, '') }
+      before { allow(subject).to receive(:render_template).and_raise(error) }
+
+      it 'renders partial' do
+        expect(subject).to receive(:render_template).once
+        expect(subject).to receive(:render_partial).once
+        expect(subject.render).to eq(:render_part)
+      end
+    end
+
+    describe 'missing different template' do
+      let(:error) { ActionView::MissingTemplate.new([], 'components/other', [], false, '') }
+      before { allow(subject).to receive(:render_template).and_raise(error) }
+
+      it 'rethrows exception' do
+        expect(subject).to receive(:render_template).once
+        expect(subject).not_to receive(:render_partial)
+        expect { subject.render }.to raise_error(ActionView::MissingTemplate)
+      end
+    end
+  end
+
+  describe '#template_path' do
+    before { allow(subject).to receive(:component_name).and_return('xyz') }
+
+    it 'concatenates path to view' do
+      expect(subject.template_path).to eq('components/xyz')
     end
   end
 
@@ -28,17 +67,38 @@ describe AtomicAssets::Render do
     end
   end
 
+  # private methods
+
   describe '#component_name' do
     it 'returns suffixless class name' do
       expect(subject.send(:component_name)).to eq('test')
     end
   end
 
-  describe '#template_path' do
-    before { allow(subject).to receive(:component_name).and_return('xyz') }
+  describe '#render_partial' do
+    let(:h) { double(render: :render_test) }
+    before { allow(subject).to receive(:h).and_return(h) }
+    before { allow(subject).to receive(:template_path).and_return('x/y') }
 
-    it 'concatenates path to view' do
-      expect(subject.send(:template_path)).to eq('components/xyz')
+    it 'renders partial' do
+      expect(subject).to receive(:h).once
+      expect(subject).to receive(:template_path).once
+      expect(h).to receive(:render).with(partial: 'x/y', locals: { a: 1, b: 'string', options: { a: 1, b: 'string' } }).once
+      expect(ActiveSupport::Deprecation).to receive(:warn).with(AtomicAssets::Render::PARTIALS_DEPRECATED).once
+      expect(subject.send(:render_partial)).to eq(:render_test)
+    end
+  end
+
+  describe '#render_template' do
+    let(:h) { double(render: :render_test) }
+    before { allow(subject).to receive(:h).and_return(h) }
+    before { allow(subject).to receive(:template_path).and_return('x/y') }
+
+    it 'renders template' do
+      expect(subject).to receive(:h).once
+      expect(subject).to receive(:template_path).once
+      expect(h).to receive(:render).with(template: 'x/y', locals: { a: 1, b: 'string', options: { a: 1, b: 'string' } }).once
+      expect(subject.send(:render_template)).to eq(:render_test)
     end
   end
 end
