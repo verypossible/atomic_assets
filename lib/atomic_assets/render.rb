@@ -6,7 +6,7 @@ module AtomicAssets
     def render
       render_template
     rescue ActionView::MissingTemplate => error
-      raise error unless error.path == template_path
+      raise error unless error.path == component_name
       render_partial
     end
 

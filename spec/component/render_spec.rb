@@ -16,7 +16,7 @@ describe AtomicAssets::Render do
   end
 
   describe '#render' do
-    before { allow(subject).to receive(:template_path).and_return('components/test') }
+    before { allow(subject).to receive(:component_name).and_return('test') }
     before { allow(subject).to receive(:render_partial).and_return(:render_part) }
     before { allow(subject).to receive(:render_template).and_return(:render_temp) }
 
@@ -30,7 +30,7 @@ describe AtomicAssets::Render do
     end
 
     describe 'missing template' do
-      let(:error) { ActionView::MissingTemplate.new([], 'components/test', [], false, '') }
+      let(:error) { ActionView::MissingTemplate.new([], 'test', [], false, '') }
       before { allow(subject).to receive(:render_template).and_raise(error) }
 
       it 'renders partial' do
@@ -41,10 +41,10 @@ describe AtomicAssets::Render do
     end
 
     describe 'missing different template' do
-      let(:error) { ActionView::MissingTemplate.new([], 'components/other', [], false, '') }
+      let(:error) { ActionView::MissingTemplate.new([], 'other', [], false, '') }
       before { allow(subject).to receive(:render_template).and_raise(error) }
 
-      it 'rethrows exception' do
+      it 'raises exception' do
         expect(subject).to receive(:render_template).once
         expect(subject).not_to receive(:render_partial)
         expect { subject.render }.to raise_error(ActionView::MissingTemplate)
