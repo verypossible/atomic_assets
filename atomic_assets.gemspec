@@ -7,8 +7,7 @@ Gem::Specification.new do |s|
   s.authors     = ['Don Humphreys']
   s.email       = 'dhumphreys88@gmail.com'
   s.files       = `git ls-files lib`.split("\n")
-  # s.files       = ['lib/atomic_assets.rb', 'lib/atomic_assets/helper.rb']
-  # s.homepage    = 'http://rubygems.org/gems/atomic_assets'
+  s.homepage    = 'http://github.com/dhumphreys/atomic_assets'
   # s.license       = 'MIT'
 
   s.add_dependency 'draper', '~> 2.1'
