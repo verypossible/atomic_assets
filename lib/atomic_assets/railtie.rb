@@ -1,7 +1,7 @@
 module AtomicAssets
   class Railtie < Rails::Railtie
-    config.after_initialize do |app|
-      app.config.autoload_paths << 'app/components'
+    initializer "atomic_assets.setup_autoload_path" do |app|
+      app.config.autoload_paths += %w(app/components)
     end
 
     initializer "atomic_assets.setup_action_controller" do |app|
