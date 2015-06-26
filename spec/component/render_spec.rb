@@ -15,6 +15,12 @@ describe AtomicAssets::Render do
     end
   end
 
+  describe '#html_safe?' do
+    it 'is true' do
+      expect(subject.html_safe?).to eq(true)
+    end
+  end
+
   describe '#render' do
     before { allow(subject).to receive(:component_name).and_return('test') }
     before { allow(subject).to receive(:render_partial).and_return(:render_part) }
