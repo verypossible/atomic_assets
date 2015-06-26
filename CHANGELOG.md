@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.3
+
+* Fix to unescape component objects rendered in production.
+
 ## 0.0.2
 
 * Custom component objects auto-loaded from `app/components`.
