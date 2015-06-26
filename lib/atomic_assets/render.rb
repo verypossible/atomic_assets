@@ -3,6 +3,11 @@ module AtomicAssets
     COMPONENT_PATH = 'components'
     PARTIALS_DEPRECATED = 'Using view partial component templates will be removed in atomic_assets-0.1.0. Please remove leading underscores from your template file names.'
 
+    # keep rails from escaping object output
+    def html_safe?
+      true
+    end
+
     def render
       render_template
     rescue ActionView::MissingTemplate => error
