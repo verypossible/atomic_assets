@@ -1,5 +1,5 @@
 module AtomicAssets
-  class Railtie < Rails::Railtie
+  class Engine < ::Rails::Engine
     initializer "atomic_assets.setup_autoload_path" do |app|
       app.config.autoload_paths += %w(app/components)
     end
