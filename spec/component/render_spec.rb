@@ -105,13 +105,14 @@ describe AtomicAssets::Render do
 
   describe '#render_partial' do
     let(:h) { double(render: :render_test) }
+    let(:render_opts) { { partial: 'x/y', locals: { a: 1, b: 'string', options: { a: 1, b: 'string' } }, formats: [:html] } }
     before { allow(subject).to receive(:h).and_return(h) }
     before { allow(subject).to receive(:template_path).and_return('x/y') }
 
     it 'renders partial' do
       expect(subject).to receive(:h).once
       expect(subject).to receive(:template_path).once
-      expect(h).to receive(:render).with(partial: 'x/y', locals: { a: 1, b: 'string', options: { a: 1, b: 'string' } }).once
+      expect(h).to receive(:render).with(render_opts).once
       expect(ActiveSupport::Deprecation).to receive(:warn).with(AtomicAssets::Render::PARTIALS_DEPRECATED).once
       expect(subject.send(:render_partial)).to eq(:render_test)
     end
@@ -119,13 +120,14 @@ describe AtomicAssets::Render do
 
   describe '#render_template' do
     let(:h) { double(render: :render_test) }
+    let(:render_opts) { { template: 'x/y', locals: { a: 1, b: 'string', options: { a: 1, b: 'string' } }, formats: [:html] } }
     before { allow(subject).to receive(:h).and_return(h) }
     before { allow(subject).to receive(:template_path).and_return('x/y') }
 
     it 'renders template' do
       expect(subject).to receive(:h).once
       expect(subject).to receive(:template_path).once
-      expect(h).to receive(:render).with(template: 'x/y', locals: { a: 1, b: 'string', options: { a: 1, b: 'string' } }).once
+      expect(h).to receive(:render).with(render_opts).once
       expect(subject.send(:render_template)).to eq(:render_test)
     end
   end

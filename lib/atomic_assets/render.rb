@@ -45,13 +45,13 @@ module AtomicAssets
     end
 
     def render_partial
-      output = h.render(partial: template_path, locals: local_options)
+      output = h.render(partial: template_path, locals: local_options, formats: [:html])
       ActiveSupport::Deprecation.warn(PARTIALS_DEPRECATED)
       output
     end
 
     def render_template
-      h.render(template: template_path, locals: local_options)
+      h.render(template: template_path, locals: local_options, formats: [:html])
     end
   end
 end
