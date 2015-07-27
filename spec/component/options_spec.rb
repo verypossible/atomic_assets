@@ -1,10 +1,5 @@
 require 'spec_helper'
 
-class OptionComponent < AtomicAssets::Component
-  option :one, a: 1, b: 2
-  option :three, c: 5
-end
-
 describe AtomicAssets::Options do
   subject { OptionComponent.new(one: 'abc', two: '345') }
 

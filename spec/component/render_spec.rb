@@ -81,6 +81,28 @@ describe AtomicAssets::Render do
     end
   end
 
+  describe '#render_options' do
+    context 'no options' do
+      subject { TestComponent.new }
+      it { expect(subject.send(:render_options)).to be_empty }
+    end
+
+    context 'predefined options' do
+      subject { OptionComponent.new }
+      it { expect(subject.send(:render_options)).to eq(one: nil, three: nil) }
+    end
+
+    context 'supplied options' do
+      subject { TestComponent.new(two: 'something') }
+      it { expect(subject.send(:render_options)).to eq(two: 'something') }
+    end
+
+    context 'combined options' do
+      subject { OptionComponent.new(two: 'something') }
+      it { expect(subject.send(:render_options)).to eq(one: nil, two: 'something', three: nil) }
+    end
+  end
+
   describe '#render_partial' do
     let(:h) { double(render: :render_test) }
     before { allow(subject).to receive(:h).and_return(h) }
