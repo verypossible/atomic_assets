@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    atomic_assets (0.0.3)
+    atomic_assets (0.0.4)
       draper (~> 2.1)
 
 GEM

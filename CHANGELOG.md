@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.4
+
+* Predefine options in component classes using `option`.
+* Allow overriding of `render_options` that are send to template.
+* Force components to look for HTML templates regardless of request type.
+
 ## 0.0.3
 
 * Fix to unescape component objects rendered in production.
