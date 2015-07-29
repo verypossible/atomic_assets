@@ -58,6 +58,28 @@ describe AtomicAssets::Render do
     end
   end
 
+  describe '#render_options' do
+    context 'no options' do
+      subject { TestComponent.new }
+      it { expect(subject.render_options).to be_empty }
+    end
+
+    context 'predefined options' do
+      subject { OptionComponent.new }
+      it { expect(subject.render_options).to eq(one: nil, three: nil) }
+    end
+
+    context 'supplied options' do
+      subject { TestComponent.new(two: 'something') }
+      it { expect(subject.render_options).to eq(two: 'something') }
+    end
+
+    context 'combined options' do
+      subject { OptionComponent.new(two: 'something') }
+      it { expect(subject.render_options).to eq(one: nil, two: 'something', three: nil) }
+    end
+  end
+
   describe '#template_path' do
     before { allow(subject).to receive(:component_name).and_return('xyz') }
 
@@ -78,28 +100,6 @@ describe AtomicAssets::Render do
   describe '#component_name' do
     it 'returns suffixless class name' do
       expect(subject.send(:component_name)).to eq('test')
-    end
-  end
-
-  describe '#render_options' do
-    context 'no options' do
-      subject { TestComponent.new }
-      it { expect(subject.send(:render_options)).to be_empty }
-    end
-
-    context 'predefined options' do
-      subject { OptionComponent.new }
-      it { expect(subject.send(:render_options)).to eq(one: nil, three: nil) }
-    end
-
-    context 'supplied options' do
-      subject { TestComponent.new(two: 'something') }
-      it { expect(subject.send(:render_options)).to eq(two: 'something') }
-    end
-
-    context 'combined options' do
-      subject { OptionComponent.new(two: 'something') }
-      it { expect(subject.send(:render_options)).to eq(one: nil, two: 'something', three: nil) }
     end
   end
 

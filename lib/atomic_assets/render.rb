@@ -15,6 +15,10 @@ module AtomicAssets
       render_partial
     end
 
+    def render_options
+      default_options.merge(options)
+    end
+
     def template_path
       File.join(COMPONENT_PATH, component_name)
     end
@@ -38,10 +42,6 @@ module AtomicAssets
     def local_options
       opts = render_options
       opts.merge(options: opts)
-    end
-
-    def render_options
-      default_options.merge(options)
     end
 
     def render_partial
