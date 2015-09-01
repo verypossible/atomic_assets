@@ -9,3 +9,8 @@ end
 
 class TestComponent < AtomicAssets::Component
 end
+
+class OptionComponent < AtomicAssets::Component
+  option :one, a: 1, b: 2
+  option :three, c: 5
+end

@@ -17,6 +17,10 @@ describe AtomicAssets::Component do
     expect(subject).to be_an(AtomicAssets::Initialize)
   end
 
+  it 'includes Options' do
+    expect(subject).to be_an(AtomicAssets::Options)
+  end
+
   it 'includes Render' do
     expect(subject).to be_an(AtomicAssets::Render)
   end

@@ -15,6 +15,10 @@ module AtomicAssets
       render_partial
     end
 
+    def render_options
+      default_options.merge(options)
+    end
+
     def template_path
       File.join(COMPONENT_PATH, component_name)
     end
@@ -29,18 +33,25 @@ module AtomicAssets
       self.class.name.underscore.gsub(/_component$/, '')
     end
 
+    def default_options
+      self.class.option_keys.map do |key|
+        [key, nil]
+      end.to_h
+    end
+
     def local_options
-      options.merge(options: options)
+      opts = render_options
+      opts.merge(options: opts)
     end
 
     def render_partial
-      output = h.render(partial: template_path, locals: local_options)
+      output = h.render(partial: template_path, locals: local_options, formats: [:html])
       ActiveSupport::Deprecation.warn(PARTIALS_DEPRECATED)
       output
     end
 
     def render_template
-      h.render(template: template_path, locals: local_options)
+      h.render(template: template_path, locals: local_options, formats: [:html])
     end
   end
 end
