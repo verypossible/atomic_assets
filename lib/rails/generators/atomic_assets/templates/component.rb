@@ -1,7 +1,7 @@
-class <%= component_name %>Component < AtomicAssets::Component
+class <%= @component.component_name %>Component < AtomicAssets::Component
   def edit
     rtn = cms_fields(field_types)
-    rtn << h.component(:text_block, field_previews).render
+    rtn << h.component(<%= ":#{@component.key}" %>), field_previews).render
     rtn.html_safe
   end
 

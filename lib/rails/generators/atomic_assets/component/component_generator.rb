@@ -10,7 +10,10 @@ module AtomicAssets
       source_root File.expand_path("../../templates", __FILE__)
 
       def create_component_file
-        @component_name = class_prefix
+        @component = OpenStruct.new(
+          class_prefix: class_prefix,
+          key: file_prefix
+        )
         template "component.rb", "app/components/#{file_prefix}_component.rb"
       end
 
