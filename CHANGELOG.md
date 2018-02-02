@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.0
+
+* Add rails 5 support
+
 ## 0.0.4
 
 * Predefine options in component classes using `option`.
